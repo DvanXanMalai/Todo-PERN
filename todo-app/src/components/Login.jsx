@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import api from '../api';
-import { saveToken } from '../auth';
+import { getUserFromToken, saveToken } from '../auth';
 import { useNavigate, Link } from 'react-router-dom';
 
-const Register = () => {
+const Login = () => {
     const [form, setForm] = useState({ name: '', password: '' });
     const [error, setError] = useState('');
     const navigate = useNavigate();
@@ -14,18 +14,18 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await api.post('/users/signup', form);
+            const response = await api.post('/users/login', form);
             saveToken(response.data.token);
-            console.log(response);
+            setUser(getUserFromToken());
             navigate('/todos');
         } catch {
-            setError('Registration failed. Try another name');
+            setError('Invalid name or password');
         }
     };
     return (
         <div className='flex justify-center items-center h-screen'>
             <div className='card bg-base-200 p-8 shadow-lg'>
-                <h2 className='text-2xl font-bold text-center mb-5'>Register</h2>
+                <h2 className='text-2xl font-bold text-center mb-5'>Login</h2>
                 <form onSubmit={handleSubmit} className='space-y-4'>
                     <input
                         className='input input-bordered w-full'
@@ -36,21 +36,22 @@ const Register = () => {
                     <input
                         className='input input-bordered w-full'
                         name='password'
-                        type='password'
                         placeholder='password'
+                        type='password'
                         onChange={handleChange}
                     />
-                    <button className='btn btn-primary w-full'>Register</button>
+                    <button className='btn btn-primary w-full'>Login</button>
                 </form>
                 {error && <p className='text-red-500'>{error}</p>}
                 <p className='text-center mt-3'>
-                    Already have an account?{' '}
-                    <Link to='/login' className='text-blue-500 hover:underline'>
-                        Login here
+                    Don't have an account?{' '}
+                    <Link to='/register' className='text-blue-500 hover:underline'>
+                        Register here
                     </Link>
                 </p>
             </div>
         </div>
     );
 };
-export default Register;
+
+export default Login;
