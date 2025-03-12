@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import api from '../api';
-import TodoItem from './Todoitem';
+import TodoItem from './TodoItem.jsx';
 import { getLoggedInUser } from '../utils/auth'
 
 const TodoList = () => {
