@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import api from '../api';
-import { getUserFromToken, saveToken } from '../auth';
+import { saveToken } from '../auth';
 import { useNavigate, Link } from 'react-router-dom';
 
 const Login = () => {
@@ -16,9 +16,8 @@ const Login = () => {
         try {
             const response = await api.post('/users/login', form);
             saveToken(response.data.token);
-            setUser(getUserFromToken());
             navigate('/todos');
-        } catch {
+        } catch (error) {
             setError('Invalid name or password');
         }
     };

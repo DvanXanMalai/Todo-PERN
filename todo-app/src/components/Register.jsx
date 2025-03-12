@@ -17,7 +17,7 @@ const Register = () => {
             const response = await api.post('/users/signup', form);
             saveToken(response.data.token);
             console.log(response);
-            navigate('/todos');
+            navigate('/login');
         } catch {
             setError('Registration failed. Try another name');
         }

@@ -2,9 +2,8 @@ import axios from 'axios';
 import { getToken } from './auth';
 
 const api = axios.create({
-    baseURL: 'http://localhost:5000',
+    baseURL: 'https://todo-backend-ydvo.onrender.com',
 });
-console.log(api)
 //attach jwt token to requests
 api.interceptors.request.use(
     (config) => {

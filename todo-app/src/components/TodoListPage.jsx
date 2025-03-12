@@ -1,17 +1,18 @@
 import { useState, useEffect } from 'react';
 import api from '../api';
 import TodoItem from './Todoitem';
+import { getLoggedInUser } from '../utils/auth'
 
-const TodoList = (user) => {
+const TodoList = () => {
     const [todos, setTodos] = useState([]);
     const [task, setTask] = useState('');
+    const user = getLoggedInUser()
     console.log(user)
 
     useEffect(() => {
         const fetchTodos = async () => {
             const response = await api.get('/todos');
             setTodos(response.data);
-            console.log(response.data)
         };
         fetchTodos();
     }, []);
@@ -20,7 +21,6 @@ const TodoList = (user) => {
         try {
             const response = await api.post('/todos', { task });
             setTodos(prevTodos => [...(prevTodos || []), response.data]);
-            console.log(todos)
             setTask('');
         } catch (error) {
             console.error('Error adding todo', error);

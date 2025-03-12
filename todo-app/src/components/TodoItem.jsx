@@ -28,7 +28,7 @@ const TodoItem = ({ todo, setTodos }) => {
                         onChange={toggleComplete}
                     />
                 </label>
-                <button className="btn btn-sm btn-error btn-secondary">
+                <button className="btn btn-sm btn-secondary" onClick={deleteTodo}>
                     Delete ❌
                 </button>
             </div>
