@@ -19,8 +19,8 @@ export const signUp = async (req, res) => {
         if (userResult.rows.length > 0) {
             return res.status(400).json({ error: 'Acoount with this name already exists' });
         }
-
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const salt = await bcrypt.genSalt(10)
+        const hashedPassword = await bcrypt.hash(password, salt);
         const result = await pool.query(
             'INSERT INTO users(name,password) VALUES ($1,$2) RETURNING *',
             [name, hashedPassword]
@@ -58,7 +58,7 @@ export const Login = async (req, res) => {
         });
     } catch (error) {
         console.error(error.message);
-        res.status(500).json({ error: 'Server error' });
+        res.status(500).json({ error: 'Error logging in' });
     }
 };
 
