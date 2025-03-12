@@ -5,8 +5,8 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 //Helper funciton to generate JWT Token
-const generateToken = (id) => {
-    return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+const generateToken = (id, name) => {
+    return jwt.sign({ id, name }, process.env.JWT_SECRET, { expiresIn: '1d' });
 };
 
 //User Signup
@@ -26,7 +26,7 @@ export const signUp = async (req, res) => {
             [name, hashedPassword]
         );
         const user = result.rows[0];
-        const token = generateToken(user.id);
+        const token = generateToken(user.id, user.name);
         res.status(201).json({
             id: user.id,
             name: user.name,
@@ -50,7 +50,7 @@ export const Login = async (req, res) => {
         if (!match) {
             return res.status(400).json({ error: 'Invalid password' });
         }
-        const token = generateToken(user.id);
+        const token = generateToken(user.id, user.name);
         res.json({
             id: user.id,
             name: user.name,
