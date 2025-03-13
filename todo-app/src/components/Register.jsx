@@ -18,8 +18,8 @@ const Register = () => {
             saveToken(response.data.token);
             console.log(response);
             navigate('/login');
-        } catch {
-            setError('Registration failed. Try another name');
+        } catch (error) {
+            setError('okay');
         }
     };
     return (

@@ -4,12 +4,16 @@ dotenv.config()
 
 const { Pool } = pkg;
 
+
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
-    ssl: { rejectUnauthorized: false },
-    host: "db.dpbuefqameottuigelnk.supabase.co",
-    port: 5432,
-    allowExitOnIdle: true
+    // ssl: { rejectUnauthorized: false },
+    // host: "db.dpbuefqameottuigelnk.supabase.co",
+    // port: 5432,
 });
 
-export default pool;
+pool.connect()
+    .then(() => console.log('Connected!'))
+    .catch(err => console.error('Error connecting:', err));
+
+export default pool
